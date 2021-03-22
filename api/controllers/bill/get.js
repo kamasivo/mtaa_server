@@ -39,25 +39,16 @@ module.exports = {
     // Note that we don't have to validate that `userId` is a number;
     // the machine runner does this for us and returns `badRequest`
     // if validation fails.
+    var user = await User.findOne({ id: userId }).populate('bills');
     // var user = await User.find().populate('bills');
-
-    await Bill.create({
-      breed: 'labrador',
-      type: 'dog',
-      name: 'fido',
-
-      // Set the User's Primary Key to associate the Pet with the User.
-      owner: userId
-    });
-
 
 
     // If no user was found, respond "notFound" (like calling `res.notFound()`)
-    // if (!user) { throw 'notFound'; }
+    if (!user) { throw 'notFound'; }
 
     // Display a personalized welcome view.
     return {
-      // bills: user.bills
+      bills: user.bills
     };
 
   }
