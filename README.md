@@ -8,6 +8,7 @@ Run npm update for update all packages needed for succesfully running the server
 
 MTAA project, server side
 
+to run server -> sails lift
 a [Sails v1](https://sailsjs.com) application
 
 ### Links
