@@ -6,10 +6,6 @@ module.exports = {
 
   description: 'View all users.',
 
-
-  inputs: {
-  },
-
   exits: {
     success: {
       description: 'Returning all users.'
@@ -23,11 +19,8 @@ module.exports = {
   fn: async function () {
     var user = await User.find();
 
-
-    // If no user was found, respond "notFound" (like calling `res.notFound()`)
     if (!user) { throw 'notFound'; }
 
-    // Display a personalized welcome view.
     return {
       user: user
     };

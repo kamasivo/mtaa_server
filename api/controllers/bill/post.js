@@ -1,15 +1,34 @@
 module.exports = {
 
 
-  friendlyName: 'View bills',
+  friendlyName: 'Create bills',
 
 
-  description: 'View all bills of user.',
+  description: 'Create new bill for user.',
+
+  inputs: {
+    userId: {
+      type: 'number',
+      required: true
+    },
+    name: {
+      type: 'string',
+      required: true
+    },
+    incomePercents: {
+      type: 'number',
+      required: true
+    },
+    sum: {
+      type: 'number',
+      required: true
+    },
+
+  },
 
   exits: {
     success: {
-      responseType: 'view',
-      description: 'Returning bills that belongs logged in user.'
+      description: 'New bill created.'
     },
     notFound: {
       description: 'No user with the specified ID was found in the database.',
@@ -17,21 +36,8 @@ module.exports = {
     }
   },
 
-  fn: async function () {
-    // userId, name, incomePercents, description, sum 
+  fn: async function ({ userId, name, incomePercents, description, sum }) {
     sails.log.info('post starting');
-    // req.param('name');
-    // `userId` property from this session.
-    // this.req.session.userId;
-
-    // Look up the user whose ID was specified in the request.
-    // Note that we don't have to validate that `userId` is a number;
-    // the machine runner does this for us and returns `badRequest`
-    // if validation fails.
-    // var user = await User.find().populate('bills');
-
-    // If no user was found, respond "notFound" (like calling `res.notFound()`)
-    // if (!user) { throw 'notFound'; }
 
     await Bill.create({
       name: name,
@@ -39,7 +45,7 @@ module.exports = {
       description: description,
       sum: sum,
       userOwner: userId
-    }).then(() => sails.log.info('Skipping new account email verification... (since `verifyEmailAddresses` is disabled)'));
+    }).then(() => sails.log.info('successfuly added'));
 
 
     return {
