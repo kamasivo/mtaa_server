@@ -1,22 +1,22 @@
 module.exports = {
 
 
-  friendlyName: 'View bill',
+  friendlyName: 'Delete bill',
 
 
-  description: 'View bills by id.',
+  description: 'Edit bill by id.',
 
 
   inputs: {
     billId: {
       type: 'number',
       required: true
-    },
+    }
   },
 
   exits: {
     success: {
-      description: 'Returning bills that belongs logged in user.'
+      description: 'Bill was successfully updated.'
     },
     notFound: {
       description: 'No user with the specified ID was found in the database.',
@@ -25,12 +25,10 @@ module.exports = {
   },
 
   fn: async function ({ billId }) {
-    var bill = await Bill.findOne({ id: billId });
-
-    if (!bill) { throw 'notFound'; }
+    await Bill.destroy({ id: billId });
 
     return {
-      bill
+      response: 'bill was deleted'
     };
 
   }

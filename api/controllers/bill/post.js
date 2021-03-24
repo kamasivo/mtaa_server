@@ -19,31 +19,29 @@ module.exports = {
       type: 'number',
       required: true
     },
-    sum: {
-      type: 'number',
-      required: true
+    description: {
+      type: 'string',
+      required: false,
     },
-
   },
 
   exits: {
     success: {
-      description: 'New bill created.'
+      description: 'New bill created.',
     },
     notFound: {
       description: 'No user with the specified ID was found in the database.',
-      responseType: 'notFound'
+      responseType: 'notFound',
     }
   },
 
-  fn: async function ({ userId, name, incomePercents, description, sum }) {
+  fn: async function ({ userId, name, incomePercents, description }) {
     sails.log.info('post starting');
 
     await Bill.create({
       name: name,
       incomePercents: incomePercents,
       description: description,
-      sum: sum,
       userOwner: userId
     }).then(() => sails.log.info('successfuly added'));
 

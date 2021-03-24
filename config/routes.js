@@ -66,7 +66,10 @@ module.exports.routes = {
   // my api endpoints
 
   'GET /user': { action: 'user/get' },
-  'GET /bill/:userId': { action: 'bill/get' },
+  'GET /bill/users/:userId': { action: 'bill/list' },
+  'GET /bill/:billId': { action: 'bill/get' },
+  'PUT /bill': { action: 'bill/put' },
+  'DELETE /bill/:billId': { action: 'bill/delete' },
   'POST /bill': { action: 'bill/post' },
 
 };
