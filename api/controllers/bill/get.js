@@ -10,18 +10,14 @@ module.exports = {
   inputs: {
     userId: {
       description: 'The ID of the user to look up.',
-      // By declaring a numeric example, Sails will automatically respond with `res.badRequest`
-      // if the `userId` parameter is not a number.
       type: 'number',
-      // By making the `userId` parameter required, Sails will automatically respond with
-      // `res.badRequest` if it's left out.
-      required: true
+      required: false
     }
   },
 
   exits: {
     success: {
-      responseType: 'view',
+      responseType: 'json',
       description: 'Returning bills that belongs logged in user.'
     },
     notFound: {
@@ -31,7 +27,7 @@ module.exports = {
   },
 
   fn: async function ({ userId }) {
-
+    sails.log.info('get bill');
     // `userId` property from this session.
     // this.req.session.userId;
 

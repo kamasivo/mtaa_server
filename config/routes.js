@@ -65,6 +65,7 @@ module.exports.routes = {
 
   // my api endpoints
 
+  'GET /user': { action: 'user/get' },
   'GET /bill': { action: 'bill/post' },
   'POST /bill': { action: 'bill/post' },
 

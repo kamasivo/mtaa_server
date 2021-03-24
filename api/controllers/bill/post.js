@@ -6,19 +6,6 @@ module.exports = {
 
   description: 'View all bills of user.',
 
-
-  inputs: {
-    userId: {
-      description: 'The ID of the user to look up.',
-      // By declaring a numeric example, Sails will automatically respond with `res.badRequest`
-      // if the `userId` parameter is not a number.
-      type: 'number',
-      // By making the `userId` parameter required, Sails will automatically respond with
-      // `res.badRequest` if it's left out.
-      required: true
-    }
-  },
-
   exits: {
     success: {
       responseType: 'view',
@@ -30,8 +17,10 @@ module.exports = {
     }
   },
 
-  fn: async function ({ userId }) {
-
+  fn: async function () {
+    // userId, name, incomePercents, description, sum 
+    sails.log.info('post starting');
+    // req.param('name');
     // `userId` property from this session.
     // this.req.session.userId;
 
@@ -41,21 +30,18 @@ module.exports = {
     // if validation fails.
     // var user = await User.find().populate('bills');
 
-    await Bill.create({
-      breed: 'labrador',
-      type: 'dog',
-      name: 'fido',
-
-      // Set the User's Primary Key to associate the Pet with the User.
-      owner: userId
-    });
-
-
-
     // If no user was found, respond "notFound" (like calling `res.notFound()`)
     // if (!user) { throw 'notFound'; }
 
-    // Display a personalized welcome view.
+    await Bill.create({
+      name: name,
+      incomePercents: incomePercents,
+      description: description,
+      sum: sum,
+      userOwner: userId
+    }).then(() => sails.log.info('Skipping new account email verification... (since `verifyEmailAddresses` is disabled)'));
+
+
     return {
       // bills: user.bills
     };
