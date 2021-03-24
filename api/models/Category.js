@@ -28,7 +28,11 @@ module.exports = {
     owner: {
       model: 'transaction',
       unique: true
-    }
+    },
+
+    allTypes: {
+      model: 'user'
+    },
 
   },
 };

@@ -65,11 +65,21 @@ module.exports.routes = {
 
   // my api endpoints
 
+  // user
   'GET /user': { action: 'user/get' },
+
+  // bills
   'GET /bill/users/:userId': { action: 'bill/list' },
   'GET /bill/:billId': { action: 'bill/get' },
   'PUT /bill': { action: 'bill/put' },
-  'DELETE /bill/:billId': { action: 'bill/delete' },
   'POST /bill': { action: 'bill/post' },
+  'DELETE /bill/:billId': { action: 'bill/delete' },
+
+  // categories
+  'GET /category/income/:userId': { action: 'category/income' },
+  'GET /category/expenditure/:userId': { action: 'category/expenditure' },
+  'POST /category/income': { action: 'category/createincome' },
+  'POST /category/expenditure': { action: 'category/createexpenditure' },
+  'DELETE /category/:categoryId/:userId': { action: 'category/delete' },
 
 };

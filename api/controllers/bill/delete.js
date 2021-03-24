@@ -4,7 +4,7 @@ module.exports = {
   friendlyName: 'Delete bill',
 
 
-  description: 'Edit bill by id.',
+  description: 'Delete bill by id.',
 
 
   inputs: {
@@ -16,7 +16,7 @@ module.exports = {
 
   exits: {
     success: {
-      description: 'Bill was successfully updated.'
+      description: 'Bill was successfully deleted.'
     },
     notFound: {
       description: 'No user with the specified ID was found in the database.',
@@ -28,7 +28,7 @@ module.exports = {
     await Bill.destroy({ id: billId });
 
     return {
-      response: 'bill was deleted'
+      response: 'Bill was deleted'
     };
 
   }
