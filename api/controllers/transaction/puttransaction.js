@@ -18,12 +18,12 @@ module.exports = {
         type: 'number',
         required: false
       },
-      account_id: {
+      accountId: {
         type: 'number',
         required: false
       },
-      category_id: {
-        type: 'string',
+      categoryId: {
+        type: 'number',
         required: false,
       },
     },
@@ -38,17 +38,16 @@ module.exports = {
       }
     },
   
-    fn: async function ({ transactionId, sum, account_id, category_id}) {
-      var transaction = await Bill.findOne({ id: transaction });
+    fn: async function ({ transactionId, sum, accountId, categoryId}) {
+      var transaction = await Transaction.findOne({ id: transactionId });
   
       if (!transaction) { throw 'notFound'; }
   
-      await Transaction.update({ id: billId })
+      await Transaction.update({ id: transactionId })
         .set({
             sum: sum,
-            clasification: type,
-            belongs: account_id,
-            category: category_id
+            belongs: accountId,
+            category: categoryId
         }).then(() => sails.log.info('successfuly edited'));
   
       return {

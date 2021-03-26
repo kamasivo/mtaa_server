@@ -15,11 +15,11 @@ module.exports = {
         type: 'string',
         required: true
       },
-      account_id: {
+      billId: {
         type: 'number',
         required: true
       },
-      category_id: {
+      categoryId: {
         type: 'number',
         required: true
       },
@@ -35,12 +35,12 @@ module.exports = {
       }
     },
   
-    fn: async function ({ sum, type, account_id, category_id }) {
+    fn: async function ({ sum, type, billId, categoryId }) {
       await Transaction.create({
         sum: sum,
         clasification: type,
-        belongs: account_id,
-        category: category_id
+        belongs: billId,
+        category: categoryId
       }).then(() => sails.log.info('successfully created'));
   
   

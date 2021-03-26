@@ -27,7 +27,7 @@ module.exports = {
   },
 
   fn: async function ({ transactionId }) {
-    await Bill.destroy({ id: transactionId });
+    await Transaction.destroy({ id: transactionId });
   
     return {
       response: 'Transaction was deleted'

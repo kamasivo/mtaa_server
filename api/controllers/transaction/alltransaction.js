@@ -1,3 +1,8 @@
+const Bill = require("../../models/Bill");
+const Transaction = require("../../models/Transaction");
+const User = require("../../models/User");
+const transaction = require("./transaction");
+
 module.exports = {
 
 
@@ -25,12 +30,19 @@ module.exports = {
     },
   
     fn: async function ({ userId }) {
-        var user = await User.findOne({ id: userId }).populate('transactions');
-        sails.log.info(user);
+ //       var user = await User.findOne({ id: userId }).populate('bills').then((user)=> {
+ //           var bills = await Bill.findOne({id:user.bills}).populate("transactions")
+ //       });
+        var user = await User.findOne({id: userId}).populate('bills').populate('transactions');
+        user.transactions = await transaction.find()
+
+        sails.log.info(bills)
+        
+
         if (!user) { throw 'notFound'; }
     
         return {
-          bills: user.transactions
+          transactions: bills.transactions
         };
     }
   

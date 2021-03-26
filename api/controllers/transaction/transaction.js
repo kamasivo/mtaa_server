@@ -12,10 +12,6 @@ module.exports = {
       type: 'number',
       required: true
     },
-    userId: {
-      type: 'number',
-      required: true
-    },
   },
 
   exits: {
@@ -28,7 +24,7 @@ module.exports = {
     }
   },
 
-  fn: async function ({ transactionId, userId }) {
+  fn: async function ({ transactionId }) {
     var transaction = await Transaction.findOne({ id: transactionId });
 
     if (!transaction) { throw 'notFound'; }
