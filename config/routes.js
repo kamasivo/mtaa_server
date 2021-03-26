@@ -40,13 +40,14 @@ module.exports.routes = {
   'DELETE /category/:categoryId/:userId': { action: 'category/delete' },
 
     // transaction
-    'GET /transactions/:userId': { action: 'transaction/alltransaction' },
+    'GET /transactions/': { action: 'transaction/alltransaction' },
     'GET /transaction/:transactionId': { action: 'transaction/transaction' },
-    'GET /transaction/incomes/:userId': { action: 'transaction/incomes' },
-    'GET /transaction/expenditures/:userId': { action: 'transaction/expenditures' },
+    'GET /transaction/incomes': { action: 'transaction/incomes' },
+    'GET /transaction/expenditures': { action: 'transaction/expenditures' },
     'GET /transaction/incomes/bill/:billId': { action: 'transaction/incomesbill' },
     'GET /transaction/expenditures/bill/:billId': { action: 'transaction/expendituresbill' },
-    'POST /transaction': { action: 'transaction/createtransaction' },
+    'POST /transaction/income': { action: 'transaction/createincome' },
+    'POST /transaction/expenditure': { action: 'transaction/createexpenditure' },
     'PUT /transaction': { action: 'transaction/puttransaction' },
     'DELETE /transaction/:transactionId': { action: 'transaction/delete' },
 };

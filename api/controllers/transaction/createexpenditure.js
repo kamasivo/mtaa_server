@@ -11,10 +11,6 @@ module.exports = {
         type: 'number',
         required: true
       },
-      type: {
-        type: 'string',
-        required: true
-      },
       billId: {
         type: 'number',
         required: true
@@ -35,11 +31,14 @@ module.exports = {
       }
     },
   
-    fn: async function ({ sum, type, billId, categoryId }) {
+    fn: async function ({ sum, billId, categoryId }) {
+      var clasification = 'EXP';
+      var userId = this.req.session.userId;
       await Transaction.create({
         sum: sum,
-        clasification: type,
+        classification: clasification,
         belongs: billId,
+        user: userId,
         category: categoryId
       }).then(() => sails.log.info('successfully created'));
   

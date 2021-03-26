@@ -24,13 +24,13 @@ module.exports = {
       }
     },
   
-    fn: async function ({ userId }) {
-      var user = await Bill.findOne({ id: billId }).populate('transactionTypes', { where: { classification: 'INC' } });
+    fn: async function ({ billId }) {
+      var bill = await Bill.findOne({ id: billId }).populate('transactions', { where: { classification: 'INC' } });
   
-      if (!user) { throw 'notFound'; }
+      if (!bill) { throw 'notFound'; }
   
       return {
-        transaction: bill.transactionTypes
+        transaction: bill.transactions
       };
   
     }

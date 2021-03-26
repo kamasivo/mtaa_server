@@ -7,12 +7,6 @@ module.exports = {
   description: 'View all expenditures transaction of user.',
 
 
-  inputs: {
-    userId: {
-      type: 'number',
-      required: true
-    },
-  },
 
   exits: {
     success: {
@@ -24,13 +18,14 @@ module.exports = {
     }
   },
 
-  fn: async function ({ userId }) {
-    var user = await User.findOne({ id: userId }).populate('transactionTypes', { where: { classification: 'EXP' } });
+  fn: async function () {
+    var userId = this.req.session.userId;
+    var user = await User.findOne({ id: userId }).populate('alltransactions', { where: { classification: 'EXP' } });
 
     if (!user) { throw 'notFound'; }
 
     return {
-      expenditureTransaction: user.transactionTypes
+      expenditureTransaction: user.alltransactions
     };
 
   }

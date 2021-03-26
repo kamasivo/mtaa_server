@@ -172,6 +172,11 @@ without necessarily having a billing card.`
     transactionTypes: {
       collection: 'category',
       via: 'allTypes',
+    },
+
+    alltransactions: {
+      collection: 'transaction',
+      via: 'user',
     }
 
   },

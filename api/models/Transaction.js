@@ -32,7 +32,11 @@ module.exports = {
     category: {
       collection: 'category',
       via: 'owner'
-    }
+    },
+
+    user: {
+      model: 'user'
+    },
 
   },
 

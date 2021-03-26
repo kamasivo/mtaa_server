@@ -8,10 +8,6 @@ module.exports = {
   
   
     inputs: {
-      userId: {
-        type: 'number',
-        required: true
-      },
       billId: {
         type: 'number',
         required: true
@@ -28,13 +24,13 @@ module.exports = {
       }
     },
   
-    fn: async function ({ userId, billId }) {
-      var user = await User.findOne({ id: userId }).Bill.findOne({ id: billId }).populate('transactionTypes', { where: { classification: 'EXP' } });
+    fn: async function ({ billId }) {
+      var bill = await Bill.findOne({ id: billId }).populate('transactions', { where: { classification: 'EXP' } });
   
-      if (!user) { throw 'notFound'; }
+      if (!bill) { throw 'notFound'; }
   
       return {
-        expenditureTransaction: user.bill.transactionTypes
+        expenditureTransaction: bill.transactions
       };
   
     }

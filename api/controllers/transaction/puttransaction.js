@@ -18,7 +18,7 @@ module.exports = {
         type: 'number',
         required: false
       },
-      accountId: {
+      billId: {
         type: 'number',
         required: false
       },
@@ -38,15 +38,16 @@ module.exports = {
       }
     },
   
-    fn: async function ({ transactionId, sum, accountId, categoryId}) {
-      var transaction = await Transaction.findOne({ id: transactionId });
+    fn: async function ({ transactionId, sum, billId, categoryId}) {
+      sails.log.info(transactionId)
+      var transaction = await Transaction.find({ id: transactionId });
   
       if (!transaction) { throw 'notFound'; }
   
       await Transaction.update({ id: transactionId })
         .set({
             sum: sum,
-            belongs: accountId,
+            belongs: billId,
             category: categoryId
         }).then(() => sails.log.info('successfuly edited'));
   

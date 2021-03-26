@@ -7,12 +7,6 @@ module.exports = {
   description: 'View all incomes transaction of user.',
 
 
-  inputs: {
-    userId: {
-      type: 'number',
-      required: true
-    },
-  },
 
   exits: {
     success: {
@@ -24,13 +18,14 @@ module.exports = {
     }
   },
 
-  fn: async function ({ userId }) {
-    var user = await User.findOne({ id: userId }).populate('transactionTypes', { where: { classification: 'INC' } });
+  fn: async function () {
+    var userId = this.req.session.userId;
+    var user = await User.findOne({ id: userId }).populate('alltransactions', { where: { classification: 'INC' } });
 
     if (!user) { throw 'notFound'; }
 
     return {
-      incomesTransaction: user.transactionTypes
+      incomesTransaction: user.alltransactions
     };
 
   }

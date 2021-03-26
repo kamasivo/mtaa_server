@@ -12,13 +12,6 @@ module.exports = {
     description: 'View all transaction of user.',
   
   
-    inputs: {
-      userId: {
-        type: 'number',
-        required: true
-      },
-    },
-  
     exits: {
       success: {
         description: 'Returning all transaction that belongs logged in user.'
@@ -29,21 +22,15 @@ module.exports = {
       }
     },
   
-    fn: async function ({ userId }) {
- //       var user = await User.findOne({ id: userId }).populate('bills').then((user)=> {
- //           var bills = await Bill.findOne({id:user.bills}).populate("transactions")
- //       });
-        var user = await User.findOne({id: userId}).populate('bills').populate('transactions');
-        user.transactions = await transaction.find()
+    fn: async function () {
+      var userId = this.req.session.userId;
 
-        sails.log.info(bills)
-        
+      var user = await User.findOne({ id: userId }).populate('alltransactions');
+      if (!user) { throw 'notFound'; }
 
-        if (!user) { throw 'notFound'; }
-    
-        return {
-          transactions: bills.transactions
-        };
+      return {
+        alltransactions: user.alltransactions
+      };
     }
   
   
