@@ -7,10 +7,6 @@ module.exports = {
   description: 'Create new expenditure category for user.',
 
   inputs: {
-    userId: {
-      type: 'number',
-      required: true
-    },
     name: {
       type: 'string',
       required: true
@@ -27,7 +23,9 @@ module.exports = {
     }
   },
 
-  fn: async function ({ userId, name }) {
+  fn: async function ({ name }) {
+    var userId = this.req.session.userId;
+
     var classification = 'EXP';
     await Category.create({
       name: name,
