@@ -82,4 +82,14 @@ module.exports.routes = {
   'POST /category/expenditure': { action: 'category/createexpenditure' },
   'DELETE /category/:categoryId/:userId': { action: 'category/delete' },
 
+    // transaction
+    'GET /transaction': { action: 'transaction/alltransaction' },
+    'GET /transaction/:transactionId': { action: 'transaction/transaction' },
+    'GET /transaction/incomes': { action: 'transaction/incomes' },
+    'GET /transaction/expenditure': { action: 'transaction/expenditures' },
+    'GET /transaction/income/:accountId': { action: 'transaction/incomesaccount' },
+    'GET /transaction/expenditure/:accountId': { action: 'transaction/expendituresaccount' },
+    'POST /transaction': { action: 'transaction/createtransaction' },
+    'PUT /transaction/:transactionId': { action: 'transaction/puttransaction' },
+    'DELETE /transaction/:transactionId/:userId': { action: 'transaction/delete' },
 };
