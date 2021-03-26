@@ -6,14 +6,6 @@ module.exports = {
 
   description: 'View all income category of user.',
 
-
-  inputs: {
-    userId: {
-      type: 'number',
-      required: true
-    },
-  },
-
   exits: {
     success: {
       description: 'Returning income category that belongs logged in user.'
@@ -24,7 +16,8 @@ module.exports = {
     }
   },
 
-  fn: async function ({ userId }) {
+  fn: async function ({ }) {
+    var userId = this.req.session.userId;
     var user = await User.findOne({ id: userId }).populate('transactionTypes', { where: { classification: 'INC' } });
 
     if (!user) { throw 'notFound'; }

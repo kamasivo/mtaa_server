@@ -10,10 +10,6 @@ module.exports = {
 
 
   inputs: {
-    userId: {
-      type: 'number',
-      required: true
-    },
     categoryId: {
       type: 'number',
       required: true
@@ -30,8 +26,8 @@ module.exports = {
     }
   },
 
-  fn: async function ({ categoryId, userId }) {
-    sails.log.info(categoryId);
+  fn: async function ({ categoryId }) {
+    var userId = this.req.session.userId;
     await User.removeFromCollection(userId, 'transactionTypes').members(categoryId);
 
     // this is not working todo

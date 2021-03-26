@@ -7,10 +7,6 @@ module.exports = {
   description: 'Create new bill for user.',
 
   inputs: {
-    userId: {
-      type: 'number',
-      required: true
-    },
     name: {
       type: 'string',
       required: true
@@ -35,8 +31,8 @@ module.exports = {
     }
   },
 
-  fn: async function ({ userId, name, incomePercents, description }) {
-    sails.log.info('post starting');
+  fn: async function ({ name, incomePercents, description }) {
+    var userId = this.req.session.userId;
 
     await Bill.create({
       name: name,
