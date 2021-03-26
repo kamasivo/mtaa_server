@@ -20,7 +20,6 @@ module.exports = {
     var userId = this.req.session.userId;
 
     var user = await User.findOne({ id: userId }).populate('bills');
-    sails.log.info(user);
     if (!user) { throw 'notFound'; }
 
     return {
