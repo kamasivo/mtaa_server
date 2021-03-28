@@ -18,12 +18,12 @@ module.exports = {
 
   fn: async function ({ }) {
     var userId = this.req.session.userId;
-    var user = await User.findOne({ id: userId }).populate('transactionTypes', { where: { classification: 'INC' } });
+    var user = await User.findOne({ id: userId }).populate('incomeTypes');
 
     if (!user) { throw 'notFound'; }
 
     return {
-      incomeCategories: user.transactionTypes
+      incomeCategories: user.incomeTypes
     };
 
   }

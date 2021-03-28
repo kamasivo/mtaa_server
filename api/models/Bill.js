@@ -36,5 +36,10 @@ module.exports = {
     }
   },
 
+    expenditureTypes: {
+     collection: 'category',
+     via: 'expenditureTypes',
+  }
+
 };
 

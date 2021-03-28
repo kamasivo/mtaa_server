@@ -25,11 +25,9 @@ module.exports = {
 
   fn: async function ({ name }) {
     var userId = this.req.session.userId;
-    var classification = 'INC';
     await Category.create({
       name: name,
-      allTypes: userId,
-      classification: classification
+      incomeTypes: userId,
     }).then(() => sails.log.info('successfully created'));
 
 

@@ -28,7 +28,7 @@ module.exports = {
 
   fn: async function ({ categoryId }) {
     var userId = this.req.session.userId;
-    await User.removeFromCollection(userId, 'transactionTypes').members(categoryId);
+    await User.removeFromCollection(userId, 'incomeTypes').members(categoryId);
 
     // this is not working todo
     await Category.destroyOne({ id: categoryId });

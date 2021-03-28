@@ -14,7 +14,6 @@ module.exports = {
     //  ╩  ╩╚═╩╩ ╩╩ ╩ ╩ ╚╝ ╚═╝╚═╝
 
     name: { type: 'string', required: true },
-    classification: { type: 'string', required: true },
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗
@@ -30,10 +29,14 @@ module.exports = {
       unique: true
     },
 
-    allTypes: {
+    incomeTypes: {
       model: 'user'
     },
 
-  },
+    expenditureTypes: {
+      model: 'bill'
+    }
+
+  }
 };
 

@@ -11,6 +11,10 @@ module.exports = {
       type: 'string',
       required: true
     },
+    billId: {
+      type: 'number',
+      required: true
+    },
   },
 
   exits: {
@@ -18,19 +22,16 @@ module.exports = {
       description: 'New category created.',
     },
     notFound: {
-      description: 'No user with the specified ID was found in the database.',
+      description: 'No bill with the specified ID was found in the database.',
       responseType: 'notFound',
     }
   },
 
-  fn: async function ({ name }) {
-    var userId = this.req.session.userId;
+  fn: async function ({ name, billId }) {
 
-    var classification = 'EXP';
     await Category.create({
       name: name,
-      allTypes: userId,
-      classification: classification
+      expenditureTypes: billId,
     }).then(() => sails.log.info('successfully created'));
 
 

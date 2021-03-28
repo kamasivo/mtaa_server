@@ -6,25 +6,31 @@ module.exports = {
 
   description: 'View all expanditure category of user.',
 
+  inputs: {
+    billId: {
+      type: 'number',
+      required: true
+    }
+  },
+
   exits: {
     success: {
       description: 'Returning expenditure category that belongs logged in user.'
     },
     notFound: {
-      description: 'No user with the specified ID was found in the database.',
+      description: 'No bill with the specified ID was found in the database.',
       responseType: 'notFound'
     }
   },
 
-  fn: async function ({ }) {
-    var userId = this.req.session.userId;
-    var user = await User.findOne({ id: userId }).populate('transactionTypes', { where: { classification: 'EXP' } });
+  fn: async function ({billId }) {
+    var bill = await Bill.findOne({ id: billId }).populate('expenditureTypes');
 
 
-    if (!user) { throw 'notFound'; }
+    if (!bill) { throw 'notFound'; }
 
     return {
-      expenditureCategories: user.transactionTypes
+      expenditureCategories: bill.expenditureTypes
     };
 
   }

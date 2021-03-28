@@ -169,9 +169,9 @@ without necessarily having a billing card.`
       via: 'userOwner',
     },
 
-    transactionTypes: {
+    incomeTypes: {
       collection: 'category',
-      via: 'allTypes',
+      via: 'incomeTypes',
     },
 
     alltransactions: {
