@@ -33,13 +33,13 @@ module.exports = {
     transactions: {
       collection: 'transaction',
       via: 'belongs',
-    }
-  },
+    },
 
     expenditureTypes: {
      collection: 'category',
      via: 'expenditureTypes',
+    }
+    
   }
-
 };
 

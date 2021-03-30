@@ -1,5 +1,3 @@
-const Category = require('../../models/Category');
-
 module.exports = {
 
 
@@ -27,11 +25,7 @@ module.exports = {
   },
 
   fn: async function ({ categoryId }) {
-    var userId = this.req.session.userId;
-    await User.removeFromCollection(userId, 'incomeTypes').members(categoryId);
-
-    // this is not working todo
-    await Category.destroyOne({ id: categoryId });
+    await Category.destroy({ id: categoryId });
 
     return {
       response: 'Category was deleted'
