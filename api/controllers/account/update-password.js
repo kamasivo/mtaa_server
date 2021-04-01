@@ -11,24 +11,38 @@ module.exports = {
 
     password: {
       description: 'The new, unencrypted password.',
-      example: 'abc123v2',
+      type: 'string',
+      required: true
+    },
+    newPassword: {
+      description: 'The old, unencrypted password.',
+      type: 'string',
       required: true
     }
 
   },
 
+  exits: {
+    badPassword: {
+      description: `The provided password does not match.`,
+      responseType: 'unauthorized'
+    }
+  },
 
-  fn: async function ({password}) {
 
-    // Hash the new password.
-    var hashed = await sails.helpers.passwords.hashPassword(password);
+  fn: async function ({ password, newPassword }) {
+    var newHashed = await sails.helpers.passwords.hashPassword(newPassword);
 
-    // Update the record for the logged-in user.
+    var user = await User.findOne({ id: this.req.session.userId });
+    sails.log.info(user.password);
+
+    await sails.helpers.passwords.checkPassword(password, user.password)
+      .intercept('incorrect', 'badPassword');
+
     await User.updateOne({ id: this.req.me.id })
-    .set({
-      password: hashed
-    });
-
+      .set({
+        password: newHashed
+      });
   }
 
 

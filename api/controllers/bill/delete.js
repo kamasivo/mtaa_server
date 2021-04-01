@@ -33,7 +33,18 @@ module.exports = {
   },
 
   fn: async function ({ billId }) {
+    let user = await User.findOne({ id: this.req.session.userId }).populate('bills', { where: { name: 'Default' } });
+    if (!user) { throw 'notFound'; }
+    let defaultBill = user.bills[0];
+
     var bill = await Bill.findOne({ id: billId });
+    if (!bill) { throw 'notFound'; }
+
+    await Bill.update({ id: defaultBill.id })   // set new percents in default bill
+      .set({
+        incomePercents: defaultBill.incomePercents + bill.incomePercents,
+      });
+
     if (bill.userOwner !== this.req.session.userId) {
       throw 'property';
     }

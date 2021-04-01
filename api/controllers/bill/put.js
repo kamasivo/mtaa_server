@@ -74,7 +74,7 @@ module.exports = {
     if (defaultBill.incomePercents + bill.incomePercents < incomePercents) {    // check if percents are correct
       throw 'incorrectPercents';
     }
-    let newPercents = defaultBill.incomePercents - incomePercents;
+    let newPercents = defaultBill.incomePercents - incomePercents + bill.incomePercents;
     if (bill.incomePercents > incomePercents) {
       newPercents = defaultBill.incomePercents + incomePercents;
     }
@@ -92,12 +92,5 @@ module.exports = {
         description: description,
         sum: sum
       });
-
-    return {
-      bill
-    };
-
   }
-
-
 };
