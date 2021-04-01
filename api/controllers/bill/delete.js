@@ -22,8 +22,12 @@ module.exports = {
       description: 'No user with the specified ID was found in the database.',
       responseType: 'notFound'
     },
-    notPermitted: {
-      description: 'You are not permitted to see this record.',
+    notOwner: {
+      description: 'You are not owner of this record.',
+      responseType: 'notpermitted'
+    },
+    badName: {
+      description: 'You cant delete Default bill.',
       responseType: 'notpermitted'
     }
   },
@@ -31,10 +35,10 @@ module.exports = {
   fn: async function ({ billId }) {
     var bill = await Bill.findOne({ id: billId });
     if (bill.userOwner !== this.req.session.userId) {
-      throw 'notPermitted';
+      throw 'property';
     }
-    if (bill.name !== 'Default') {
-      throw 'notPermitted';
+    if (bill.name === 'Default') {
+      throw 'badName';
     }
 
     await Bill.destroy({ id: billId });
