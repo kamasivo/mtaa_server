@@ -41,7 +41,14 @@ module.exports = {
       belongs: billId,
       user: userId,
       category: categoryId
-    }).then(() => sails.log.info('successfully created'));
+    });
+
+    var bill = await Bill.findOne({ id: billId });
+    await Bill.update({ id: billId })     // add money on bill
+      .set({
+        sum: bill.sum - sum
+      });
+
   }
 
 
