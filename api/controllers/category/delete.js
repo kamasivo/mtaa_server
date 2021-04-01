@@ -39,9 +39,7 @@ module.exports = {
 
     var bill = await Bill.findOne({ id: category.expenditureTypes });  // this is bill id to which category belongs is category.expenditureTypes
 
-    if (!bill) { throw 'notFound'; }
-
-    if (bill.userOwner !== this.req.session.userId) {
+    if (bill && bill.userOwner !== this.req.session.userId) {
       throw 'notPermitted';
     }
 
