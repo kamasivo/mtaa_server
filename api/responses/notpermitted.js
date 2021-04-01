@@ -4,6 +4,6 @@ module.exports = function notpermitted() {
 
   sails.log.verbose('Not permitted action.');
 
-  return res.sendStatus(403);
+  return res.sendStatus(401);
 
 };

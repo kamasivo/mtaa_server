@@ -31,13 +31,14 @@ module.exports = {
   fn: async function ({ billId }) {
     var bill = await Bill.findOne({ id: billId });
 
+    if (!bill) { throw 'notFound'; }
+
     if (bill.userOwner === this.req.session.userId) {
       return {
         bill
       };
     }
 
-    if (!bill) { throw 'notFound'; }
 
     throw 'notPermitted';
 

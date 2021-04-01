@@ -16,6 +16,7 @@ module.exports = {
   exits: {
     success: {
       description: 'New category created.',
+      responseType: 'created'
     },
     notFound: {
       description: 'No user with the specified ID was found in the database.',
@@ -28,13 +29,7 @@ module.exports = {
     await Category.create({
       name: name,
       incomeTypes: userId,
-    }).then(() => sails.log.info('successfully created'));
-
-
-    return {
-      response: 'created successfully'
-    };
-
+    });
   }
 
 

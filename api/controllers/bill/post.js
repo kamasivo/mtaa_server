@@ -42,11 +42,6 @@ module.exports = {
       userOwner: userId
     }).then(() => sails.log.info('successfuly added'));
 
-
-    return {
-      // bills: user.bills
-    };
-
   }
 
 

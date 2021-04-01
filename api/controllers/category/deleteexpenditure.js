@@ -22,16 +22,24 @@ module.exports = {
     notFound: {
       description: 'No user with the specified ID was found in the database.',
       responseType: 'notFound'
+    },
+    notPermitted: {
+      description: 'You are not permitted to see this record.',
+      responseType: 'notpermitted'
     }
   },
 
-  fn: async function ({ CategoryId }) {
-    await Category.destroy({ id: CategoryId });
-  
-    return {
-      response: 'Category was deleted'
-    };
+  fn: async function ({ categoryId }) {
 
+    var category = await Category.findOne({ id: categoryId });
+
+    sails.log.info(category.expenditureTypes);
+    // if (category.expenditureTypes !== this.req.session.userId) {
+    //   throw 'notPermitted';
+    // }
+
+
+    await Category.destroy({ id: categoryId });
   }
 
 
