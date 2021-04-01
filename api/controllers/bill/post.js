@@ -19,6 +19,10 @@ module.exports = {
       type: 'string',
       required: false,
     },
+    sum: {
+      type: 'number',
+      required: false,
+    },
   },
 
   exits: {
@@ -29,18 +33,43 @@ module.exports = {
     notFound: {
       description: 'No user with the specified ID was found in the database.',
       responseType: 'notFound',
+    },
+    badAction: {
+      description: 'Some user is trying to create another Default bill, probably something went wrong with him.',
+      responseType: 'badinput',
+    },
+    incorrectPercents: {
+      description: 'User is trying to get more then 100% in total.',
+      responseType: 'badinput',
     }
   },
 
-  fn: async function ({ name, incomePercents, description }) {
-    var userId = this.req.session.userId;
+  fn: async function ({ name, incomePercents, description, sum }) {
+    if (name === 'Default') {
+      throw 'badAction';
+    }
+
+    let user = await User.findOne({ id: this.req.session.userId }).populate('bills', { where: { name: 'Default' } });
+    if (!user) { throw 'notFound'; }
+
+    let defaultBill = user.bills[0];
+    if (defaultBill.incomePercents < incomePercents) {    // check if percents are correct
+      throw 'incorrectPercents';
+    }
+
+    await Bill.update({ id: defaultBill.id })   // set new percents in default bill
+      .set({
+        incomePercents: defaultBill.incomePercents - incomePercents,
+      });
+
 
     await Bill.create({
       name: name,
       incomePercents: incomePercents,
       description: description,
-      userOwner: userId
-    }).then(() => sails.log.info('successfuly added'));
+      userOwner: this.req.session.userId,
+      sum: sum
+    });
 
   }
 

@@ -37,7 +37,6 @@ module.exports.routes = {
   'POST /category/income': { action: 'category/createincome' },
   'POST /category/expenditure': { action: 'category/createexpenditure' },
   'DELETE /category/:categoryId': { action: 'category/delete' },
-  // 'DELETE /category/expenditure/:categoryId': { action: 'category/deleteexpenditure' },
 
   // transaction
   'GET /transactions/': { action: 'transaction/alltransaction' },
@@ -47,6 +46,7 @@ module.exports.routes = {
   'GET /transaction/incomes/bill/:billId': { action: 'transaction/incomesbill' },
   'GET /transaction/expenditures/bill/:billId': { action: 'transaction/expendituresbill' },
   'POST /transaction/income': { action: 'transaction/createincome' },
+  'POST /transaction/splitincome': { action: 'transaction/splitincome' },
   'POST /transaction/expenditure': { action: 'transaction/createexpenditure' },
   'PUT /transaction': { action: 'transaction/puttransaction' },
   'DELETE /transaction/:transactionId': { action: 'transaction/delete' },

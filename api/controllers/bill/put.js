@@ -41,10 +41,22 @@ module.exports = {
     notPermitted: {
       description: 'You are not permitted to see this record.',
       responseType: 'notpermitted'
+    },
+    badAction: {
+      description: 'Some user is trying to create another Default bill, probably something went wrong with him.',
+      responseType: 'badinput',
+    },
+    incorrectPercents: {
+      description: 'User is trying to get more then 100% in total.',
+      responseType: 'badinput',
     }
   },
 
   fn: async function ({ billId, name, incomePercents, description, sum }) {
+    if (name === 'Default') {
+      throw 'badAction';
+    }
+
     var bill = await Bill.findOne({ id: billId });
 
     if (!bill) { throw 'notFound'; }
@@ -53,6 +65,24 @@ module.exports = {
       throw 'notPermitted';
     }
 
+    let user = await User.findOne({ id: this.req.session.userId }).populate('bills', { where: { name: 'Default' } });
+    if (!user) { throw 'notFound'; }
+
+    let defaultBill = user.bills[0];
+
+    if (defaultBill.incomePercents + bill.incomePercents < incomePercents) {    // check if percents are correct
+      throw 'incorrectPercents';
+    }
+    let newPercents = defaultBill.incomePercents - incomePercents;
+    if (bill.incomePercents > incomePercents) {
+      newPercents = defaultBill.incomePercents + incomePercents;
+    }
+
+    await Bill.update({ id: defaultBill.id })   // set new percents in default bill
+      .set({
+        incomePercents: newPercents
+      });
+
 
     await Bill.update({ id: billId })
       .set({
@@ -60,7 +90,7 @@ module.exports = {
         incomePercents: incomePercents,
         description: description,
         sum: sum
-      }).then(() => sails.log.info('successfuly edited'));
+      });
 
     return {
       bill

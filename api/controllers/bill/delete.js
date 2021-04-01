@@ -33,6 +33,9 @@ module.exports = {
     if (bill.userOwner !== this.req.session.userId) {
       throw 'notPermitted';
     }
+    if (bill.name !== 'Default') {
+      throw 'notPermitted';
+    }
 
     await Bill.destroy({ id: billId });
     return {
