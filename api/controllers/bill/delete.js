@@ -40,17 +40,18 @@ module.exports = {
     var bill = await Bill.findOne({ id: billId });
     if (!bill) { throw 'notFound'; }
 
+    if (bill.userOwner !== this.req.session.userId) {
+      throw 'notOwner';
+    }
+    if (bill.name === 'Default') {
+      throw 'badName';
+    }
+
     await Bill.update({ id: defaultBill.id })   // set new percents in default bill
       .set({
         incomePercents: defaultBill.incomePercents + bill.incomePercents,
       });
 
-    if (bill.userOwner !== this.req.session.userId) {
-      throw 'property';
-    }
-    if (bill.name === 'Default') {
-      throw 'badName';
-    }
 
     await Bill.destroy({ id: billId });
     return {
