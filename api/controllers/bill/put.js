@@ -53,13 +53,14 @@ module.exports = {
   },
 
   fn: async function ({ billId, name, incomePercents, description, sum }) {
-    if (name === 'Default') {
-      throw 'badAction';
-    }
 
     var bill = await Bill.findOne({ id: billId });
 
     if (!bill) { throw 'notFound'; }
+
+    if (bill.name === 'Default') {
+      throw 'badAction';
+    }
 
     if (bill.userOwner !== this.req.session.userId) {
       throw 'notPermitted';
