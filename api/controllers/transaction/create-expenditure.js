@@ -43,6 +43,14 @@ module.exports = {
       throw 'notPermitted';
     }
 
+
+    var category = await Category.findOne({ id: categoryId });
+    if (!category) { throw 'notFound'; }
+
+    if (category.belongs !== bill.id) {
+      throw 'notPermitted';
+    }
+
     await Transaction.create({
       sum: sum,
       classification: classification,
@@ -50,7 +58,6 @@ module.exports = {
       user: userId,
       category: categoryId
     });
-
 
     await Bill.update({ id: billId })     // add money on bill
       .set({

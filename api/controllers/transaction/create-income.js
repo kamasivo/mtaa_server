@@ -44,6 +44,14 @@ module.exports = {
     }
 
 
+    var category = await Category.findOne({ id: categoryId });
+    if (!category) { throw 'notFound'; }
+
+    if (category.incomeTypes !== this.req.session.userId) {
+      throw 'notPermitted';
+    }
+
+
     await Transaction.create({
       sum: sum,
       classification: classification,

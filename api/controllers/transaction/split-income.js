@@ -32,6 +32,13 @@ module.exports = {
     var classification = 'INC';
     var userId = this.req.session.userId;
 
+    var category = await Category.findOne({ id: categoryId });
+    if (!category) { throw 'notFound'; }
+
+    if (category.incomeTypes !== userId) {
+      throw 'notPermitted';
+    }
+
 
     var user = await User.findOne({ id: userId }).populate('bills');
     if (!user) { throw 'notFound'; }
