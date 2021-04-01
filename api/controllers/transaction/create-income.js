@@ -35,6 +35,15 @@ module.exports = {
   fn: async function ({ sum, billId, categoryId }) {
     var classification = 'INC';
     var userId = this.req.session.userId;
+
+    var bill = await Bill.findOne({ id: billId });
+    if (!bill) { throw 'notFound'; }
+
+    if (bill.userOwner !== this.req.session.userId) {
+      throw 'notPermitted';
+    }
+
+
     await Transaction.create({
       sum: sum,
       classification: classification,

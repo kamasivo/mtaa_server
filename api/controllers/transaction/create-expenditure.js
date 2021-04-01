@@ -35,6 +35,14 @@ module.exports = {
   fn: async function ({ sum, billId, categoryId }) {
     var classification = 'EXP';
     var userId = this.req.session.userId;
+
+    var bill = await Bill.findOne({ id: billId });
+    if (!bill) { throw 'notFound'; }
+
+    if (bill.userOwner !== this.req.session.userId) {
+      throw 'notPermitted';
+    }
+
     await Transaction.create({
       sum: sum,
       classification: classification,
@@ -43,7 +51,7 @@ module.exports = {
       category: categoryId
     });
 
-    var bill = await Bill.findOne({ id: billId });
+
     await Bill.update({ id: billId })     // add money on bill
       .set({
         sum: bill.sum - sum
