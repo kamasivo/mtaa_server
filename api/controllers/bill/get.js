@@ -21,17 +21,26 @@ module.exports = {
     notFound: {
       description: 'No user with the specified ID was found in the database.',
       responseType: 'notFound'
+    },
+    notPermitted: {
+      description: 'You are not permitted to see this record.',
+      responseType: 'notpermitted'
     }
   },
 
   fn: async function ({ billId }) {
     var bill = await Bill.findOne({ id: billId });
 
+    if (bill.userOwner === this.req.session.userId) {
+      return {
+        bill
+      };
+    }
+
     if (!bill) { throw 'notFound'; }
 
-    return {
-      bill
-    };
+    throw 'notPermitted';
+
 
   }
 

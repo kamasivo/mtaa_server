@@ -24,6 +24,7 @@ module.exports = {
   exits: {
     success: {
       description: 'New bill created.',
+      responseType: 'created'
     },
     notFound: {
       description: 'No user with the specified ID was found in the database.',

@@ -21,12 +21,20 @@ module.exports = {
     notFound: {
       description: 'No user with the specified ID was found in the database.',
       responseType: 'notFound'
+    },
+    notPermitted: {
+      description: 'You are not permitted to see this record.',
+      responseType: 'notpermitted'
     }
   },
 
   fn: async function ({ billId }) {
-    await Bill.destroy({ id: billId });
+    var bill = await Bill.findOne({ id: billId });
+    if (bill.userOwner !== this.req.session.userId) {
+      throw 'notPermitted';
+    }
 
+    await Bill.destroy({ id: billId });
     return {
       response: 'Bill was deleted'
     };

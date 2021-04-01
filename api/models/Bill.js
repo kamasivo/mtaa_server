@@ -36,10 +36,10 @@ module.exports = {
     },
 
     expenditureTypes: {
-     collection: 'category',
-     via: 'expenditureTypes',
+      collection: 'category',
+      via: 'expenditureTypes',
     }
-    
+
   }
 };
 
