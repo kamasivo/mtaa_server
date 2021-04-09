@@ -33,6 +33,10 @@ module.exports = {
     notPermitted: {
       description: 'You are not permitted to see this record.',
       responseType: 'notpermitted'
+    },
+    wrongCategory: {
+      description: 'You entered wrong catagory.',
+      responseType: 'notpermitted'
     }
   },
 
