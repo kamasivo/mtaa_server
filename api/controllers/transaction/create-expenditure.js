@@ -33,6 +33,10 @@ module.exports = {
     notPermitted: {
       description: 'You are not permitted to see this record.',
       responseType: 'notpermitted'
+    },
+    wrongCategory: {
+      description: 'You entered wrong catagory.',
+      responseType: 'notpermitted'
     }
   },
 
@@ -51,9 +55,10 @@ module.exports = {
     var category = await Category.findOne({ id: categoryId });
     if (!category) { throw 'notFound'; }
 
-    if (category.belongs !== bill.id) {
-      throw 'notPermitted';
-    }
+    //todo fix this
+    // if (category.belongs !== bill.id) {
+    //   throw 'wrongCategory';
+    // }
 
     await Transaction.create({
       sum: sum,
