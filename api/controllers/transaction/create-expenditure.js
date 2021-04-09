@@ -51,7 +51,7 @@ module.exports = {
     var category = await Category.findOne({ id: categoryId });
     if (!category) { throw 'notFound'; }
 
-    if (category.belongs !== bill.id) {
+    if (category.expenditureTypes !== bill.id) {
       throw 'notPermitted';
     }
 
